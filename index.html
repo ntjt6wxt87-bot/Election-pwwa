@@ -1,19 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Dynamic base href for GitHub Pages subpaths -->
-  <script>
-    (function() {
-      try {
-        var path = location.pathname;
-        var base = path.endsWith('/') ? path : path.replace(/[^/]+$/, '');
-        var baseEl = document.createElement('base');
-        baseEl.setAttribute('href', base);
-        document.head.insertBefore(baseEl, document.head.firstChild);
-      } catch (e) { console.warn('Base inject failed', e); }
-    })();
-  </script>
-
   <meta name="theme-color" content="#003366">
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -115,26 +102,7 @@
     .monthBlock:last-child{page-break-after:auto;break-after:auto}
   }
 </style>
-
-  <style>
-    #errBanner { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(200,0,0,.9); color: #fff;
-                 font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; padding: 8px 12px;
-                 z-index: 99999; display: none; }
-  </style>
-  <div id="errBanner"></div>
-  <script>
-    (function(){
-      var showErr = function(msg){
-        var el = document.getElementById('errBanner');
-        if (!el) return;
-        el.textContent = 'Error: ' + msg;
-        el.style.display = 'block';
-      };
-      window.addEventListener('error', function(e){ showErr(e.message); });
-      window.addEventListener('unhandledrejection', function(e){ showErr((e.reason && e.reason.message) || 'Unhandled rejection'); });
-    })();
-  </script>
-\n</head>
+</head>
 <body>
 <header><h1>Bahamas Election Calendar</h1></header>
 <div class="container">
@@ -553,54 +521,13 @@ window.addEventListener('DOMContentLoaded', function(){
 
     const style=`<style>@page{size:A4 landscape;margin:10mm}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}body{font-family:Segoe UI,Arial,sans-serif;color:#000}.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.day-head{background:#eef3f7 !important;font-weight:700;text-align:center;padding:4px;border:1px solid #d1d5db;color:#000}.cell{min-height:96px;border:1px solid #e5e7eb;border-radius:4px;position:relative;background:#fff;isolation:isolate;color:#000}.dateNum{position:absolute;top:2px;right:4px;font-size:12px;color:#000;z-index:3}.paint{position:absolute;inset:0;border-radius:4px;z-index:1}.tri{position:absolute;inset:0;z-index:1}.tri.tl{clip-path:polygon(0 0,100% 0,0 100%)}.tri.br{clip-path:polygon(100% 0,100% 100%,0 100%)}.tagTop,.tagBottom{position:absolute;left:2px;right:2px;display:flex;flex-direction:column;gap:2px;z-index:4;color:#000}.tagTop{top:16px;align-items:center}.tagBottom{bottom:2px;align-items:flex-start}.numTopRight,.numBottomRight{position:absolute;right:4px;display:flex;flex-direction:column;gap:1px;z-index:5;color:#000}.numTopRight{top:26px}.numBottomRight{bottom:18px}.chip{font-size:10px;padding:0 3px;border-radius:2px;border:1px solid rgba(0,0,0,.2);background:rgba(255,255,255,.9);font-weight:700;color:#000}.monthBlock{page-break-after:always;break-after:page}.monthBlock:last-child{page-break-after:auto;break-after:auto}</style>`;
 
-    const html=`<!doctype html><html><head><title>Calendar</title>${style}
-  <style>
-    #errBanner { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(200,0,0,.9); color: #fff;
-                 font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; padding: 8px 12px;
-                 z-index: 99999; display: none; }
-  </style>
-  <div id="errBanner"></div>
-  <script>
-    (function(){
-      var showErr = function(msg){
-        var el = document.getElementById('errBanner');
-        if (!el) return;
-        el.textContent = 'Error: ' + msg;
-        el.style.display = 'block';
-      };
-      window.addEventListener('error', function(e){ showErr(e.message); });
-      window.addEventListener('unhandledrejection', function(e){ showErr((e.reason && e.reason.message) || 'Unhandled rejection'); });
-    })();
-  </script>
-\n</head><body>${temp.innerHTML}
+    const html=`<!doctype html><html><head><title>Calendar</title>${style}</head><body>${temp.innerHTML}
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('./sw.js').catch(function(err){ console.warn('SW reg failed', err); });
     });
   }
-</script>
-\n
-<script>
-  (function() {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        try {
-          var baseHref = (document.querySelector('base') && document.querySelector('base').href) || document.baseURI || './';
-          var swUrl = new URL('sw.js', baseHref).toString();
-          navigator.serviceWorker.register(swUrl).then(function(reg){
-            console.log('SW registered', reg.scope);
-          }).catch(function(err){
-            console.warn('SW reg failed', err);
-          });
-        } catch (e) {
-          console.warn('SW registration error', e);
-        }
-      });
-    } else {
-      console.log('Service workers not supported');
-    }
-  })();
 </script>
 \n</body></html>`;
     const w=openPrintDoc(html);
@@ -617,54 +544,13 @@ window.addEventListener('DOMContentLoaded', function(){
     if(legend){ wrap.appendChild(cloneWithComputedColors(legend)); }
 
     const style=`<style>@page{size:A4 portrait;margin:12mm}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}body{font-family:Segoe UI,Arial,sans-serif;color:#000;font-size:12px}h3{color:#000;margin:0 0 8px}.legend-color{width:14px;height:10px;border-radius:2px;border:1px solid #cbd5e1;display:inline-block;margin-right:6px}</style>`;
-    const html=`<!doctype html><html><head><title>Key Dates & Ranges</title>${style}
-  <style>
-    #errBanner { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(200,0,0,.9); color: #fff;
-                 font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; padding: 8px 12px;
-                 z-index: 99999; display: none; }
-  </style>
-  <div id="errBanner"></div>
-  <script>
-    (function(){
-      var showErr = function(msg){
-        var el = document.getElementById('errBanner');
-        if (!el) return;
-        el.textContent = 'Error: ' + msg;
-        el.style.display = 'block';
-      };
-      window.addEventListener('error', function(e){ showErr(e.message); });
-      window.addEventListener('unhandledrejection', function(e){ showErr((e.reason && e.reason.message) || 'Unhandled rejection'); });
-    })();
-  </script>
-\n</head><body>${wrap.innerHTML}
+    const html=`<!doctype html><html><head><title>Key Dates & Ranges</title>${style}</head><body>${wrap.innerHTML}
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('./sw.js').catch(function(err){ console.warn('SW reg failed', err); });
     });
   }
-</script>
-\n
-<script>
-  (function() {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        try {
-          var baseHref = (document.querySelector('base') && document.querySelector('base').href) || document.baseURI || './';
-          var swUrl = new URL('sw.js', baseHref).toString();
-          navigator.serviceWorker.register(swUrl).then(function(reg){
-            console.log('SW registered', reg.scope);
-          }).catch(function(err){
-            console.warn('SW reg failed', err);
-          });
-        } catch (e) {
-          console.warn('SW registration error', e);
-        }
-      });
-    } else {
-      console.log('Service workers not supported');
-    }
-  })();
 </script>
 \n</body></html>`;
     const w=openPrintDoc(html,'height=900,width=800');
@@ -690,28 +576,6 @@ window.addEventListener('DOMContentLoaded', function(){
       navigator.serviceWorker.register('./sw.js').catch(function(err){ console.warn('SW reg failed', err); });
     });
   }
-</script>
-\n
-<script>
-  (function() {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        try {
-          var baseHref = (document.querySelector('base') && document.querySelector('base').href) || document.baseURI || './';
-          var swUrl = new URL('sw.js', baseHref).toString();
-          navigator.serviceWorker.register(swUrl).then(function(reg){
-            console.log('SW registered', reg.scope);
-          }).catch(function(err){
-            console.warn('SW reg failed', err);
-          });
-        } catch (e) {
-          console.warn('SW registration error', e);
-        }
-      });
-    } else {
-      console.log('Service workers not supported');
-    }
-  })();
 </script>
 \n</body>
 </html>
